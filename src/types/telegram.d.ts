@@ -12,3 +12,16 @@ export interface LaunchParams {
     user?: TelegramUser;
   };
 }
+
+declare global {
+  interface Window {
+    Telegram?: {
+      WebApp: {
+        close: () => void;
+        expand: () => void;
+      };
+    };
+  }
+}
+
+export {};

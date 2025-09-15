@@ -3,7 +3,7 @@ import { GetUser, GetMemberById } from "../../lib/telegram";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import type { TelegramUser } from "../../types/telegram";
-import { openTelegramLink, closeMiniApp } from "@telegram-apps/sdk";
+import { openTelegramLink } from "@telegram-apps/sdk";
 import LoadingSpinner from "../../components/LoadingSpinner";
 
 const MemberProfilePage = () => {
@@ -40,7 +40,7 @@ const MemberProfilePage = () => {
   const handleWriteClick = () => {
     if (userId && openTelegramLink.isAvailable() && member?.username) {
       openTelegramLink(`https://t.me/${member.username}`);
-      closeMiniApp();
+      window.Telegram?.WebApp.close();
     }
   };
 
