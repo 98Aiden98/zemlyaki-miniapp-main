@@ -55,7 +55,7 @@ export const GetUser = (): TelegramUser => {
   };
 };
 
-const BOT_TOKEN = process.env.VITE_APP_TELEGRAM_BOT_TOKEN || "not_set";
+const BOT_TOKEN = import.meta.env.VITE_APP_TELEGRAM_BOT_TOKEN || "not_set";
 
 export const GetMembers = async (chatId: string): Promise<TelegramUser[]> => {
   try {
@@ -86,40 +86,6 @@ export const GetMembers = async (chatId: string): Promise<TelegramUser[]> => {
     return [];
   }
 };
-
-// Alternative for full member list (requires backend or MTProto):
-/*
-export const GetMembers = async (chatId: string): Promise<User[]> => {
-  try {
-    // Example: Call a backend endpoint that uses MTProto or a custom Telegram API
-    const response = await fetch(`https://your-backend-api/getChatMembers?chat_id=${chatId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${YOUR_BACKEND_AUTH_TOKEN}`,
-      },
-    });
-
-    const data = await response.json();
-    if (!data.ok) {
-      throw new Error(data.error || "Failed to fetch chat members");
-    }
-
-    const members: User[] = data.result.map((member: any) => ({
-      id: member.user.id.toString(),
-      name: `${member.user.first_name} ${member.user.last_name || ""}`.trim(),
-      photo_url: member.user.photo_url || "https://via.placeholder.com/40",
-      phone: member.user.phone_number || "",
-      bio: member.user.bio || "",
-    }));
-
-    return members;
-  } catch (error) {
-    console.error("Error fetching group members:", error);
-    return [];
-  }
-};
-*/
 
 export const GetMemberById = async (id: number): Promise<TelegramUser | null> => {
   const members = await GetMembers("mock_chat_id");
