@@ -1,15 +1,10 @@
 import css from "./index.module.scss";
-import { initTelegram, GetUser } from "../../lib/telegram";
-import { useEffect } from "react";
+import { GetUser } from "../../lib/telegram";
 import { useNavigate } from "react-router-dom";
 
 const MainPage = () => {
   const navigate = useNavigate();
   const user = GetUser();
-
-  useEffect(() => {
-    initTelegram();
-  }, []);
 
   const menuItems = [
     { id: 1, title: "Профиль", icon: "👤", path: "/profile" },

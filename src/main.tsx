@@ -1,13 +1,19 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.tsx";
 import { AppWrapper } from "./components/AppWrapper/AppWrapper.tsx";
+import { init } from "@telegram-apps/sdk-react";
+import ReactDOM from "react-dom/client";
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
+const root = ReactDOM.createRoot(document.getElementById('root')!)
+
+try {
+  init()
+  root.render(<StrictMode>
     <AppWrapper>
       <App />
     </AppWrapper>
-  </StrictMode>
-);
+  </StrictMode>)
+} catch (e) {
+  console.error(e)
+}
