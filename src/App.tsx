@@ -1,8 +1,9 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { getMainPage, getProfilePage } from "./lib/routes";
+import { getChatsPage, getMainPage, getProfilePage } from "./lib/routes";
 import MainPage from "./pages/mainPage";
 import ProfilePage from "./pages/profilePage";
+import ChatsPage from "./pages/chatsPage";
 
 function App() {
 
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path={getMainPage()} element={<MainPage />} />
         <Route path={getProfilePage()} element={<ProfilePage />}/>
+        <Route path={getChatsPage()} element={<ChatsPage />} />
       </Routes>
     </BrowserRouter>
   );

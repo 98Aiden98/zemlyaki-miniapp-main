@@ -1,4 +1,4 @@
-.chatsContainer {
+.membersContainer {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -26,14 +26,14 @@
   font-weight: 600;
 }
 
-.chats {
+.members {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   padding: 16px;
 }
 
-.chats__button {
+.members__button {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,12 +52,14 @@
   }
 }
 
-.chats__icon {
-  font-size: 24px;
+.members__avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
   margin-bottom: 8px;
 }
 
-.chats__title {
+.members__name {
   font-size: 16px;
   font-weight: 500;
   color: #333;
