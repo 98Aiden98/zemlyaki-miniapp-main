@@ -1,9 +1,10 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { getChatsPage, getMainPage, getProfilePage } from "./lib/routes";
+import { getChatsPage, getMainPage, getMembersPage, getProfilePage } from "./lib/routes";
 import MainPage from "./pages/mainPage";
 import ProfilePage from "./pages/profilePage";
 import ChatsPage from "./pages/chatsPage";
+import MembersPage from "./pages/membersPage";
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
         <Route path={getMainPage()} element={<MainPage />} />
         <Route path={getProfilePage()} element={<ProfilePage />}/>
         <Route path={getChatsPage()} element={<ChatsPage />} />
+        <Route path={getMembersPage()} element={<MembersPage />} />
       </Routes>
     </BrowserRouter>
   );
