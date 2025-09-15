@@ -1,0 +1,67 @@
+.loadingPage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+
+  &__content {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    min-width: 400px;
+  }
+
+  &__logo {
+    margin-bottom: 30px;
+  }
+
+  .logoSpinner {
+    font-size: 60px;
+    animation: spin 1.5s ease-in-out infinite;
+  }
+
+  &__title {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  &__subtitle {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 16px;
+  }
+
+  &__progress {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  &__percentage {
+    display: block;
+    margin-top: 10px;
+    font-weight: 600;
+    color: #444;
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: scale(0.8) rotate(0deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.1) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8) rotate(360deg);
+    opacity: 0.7;
+  }
+}

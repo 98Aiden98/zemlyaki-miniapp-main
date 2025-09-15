@@ -6,9 +6,10 @@ import ProfilePage from "./pages/profilePage";
 import ChatsPage from "./pages/chatsPage";
 import MembersPage from "./pages/membersPage";
 import MemberProfilePage from "./pages/memberProfilePage";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { init } from "./lib/telegram";
 import { backButton } from "@telegram-apps/sdk-react";
+import LoadingPage from "./pages/LoadingPage";
 
 const BackButtonHandler = () => {
   const navigate = useNavigate();
@@ -49,12 +50,15 @@ const BackButtonHandler = () => {
 
 function App() {
   const isInitialized = useRef(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (!isInitialized.current) {
       try {
+        setIsLoading(true);
         init();
         isInitialized.current = true;
+        setIsLoading(false);
       } catch (error) {
         console.error("Failed to initialize Telegram SDK:", error);
       }
@@ -67,6 +71,9 @@ function App() {
     };
   }, []);
   return (
+    isLoading ? (
+      <LoadingPage/>
+    ) :
     <BrowserRouter>
       <BackButtonHandler />
       <Routes>
