@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import * as routes from "./lib/routes";
 import MainPage from "./pages/mainPage";
 import ProfilePage from "./pages/profilePage";
@@ -9,39 +9,6 @@ import MemberProfilePage from "./pages/memberProfilePage";
 import { useEffect, useRef } from "react";
 import { init } from "./lib/telegram";
 import { backButton } from "@telegram-apps/sdk-react";
-
-const BackButtonHandler = () => {
-  const navigate = useNavigate();
-  const isBackButtonMounted = useRef(false);
-
-  useEffect(() => {
-    if (backButton.isSupported() && !isBackButtonMounted.current) {
-      backButton.mount();
-      isBackButtonMounted.current = true;
-
-      const handleRouteChange = () => {
-        if (window.location.pathname === "/") {
-          backButton.hide();
-        } else {
-          backButton.show();
-        }
-      };
-
-      handleRouteChange();
-      window.addEventListener("popstate", handleRouteChange);
-
-      return () => {
-        window.removeEventListener("popstate", handleRouteChange);
-        if (isBackButtonMounted.current) {
-          backButton.unmount();
-          isBackButtonMounted.current = false;
-        }
-      };
-    }
-  }, [navigate]);
-
-  return null;
-};
 
 function App() {
   const isInitialized = useRef(false);
@@ -64,7 +31,6 @@ function App() {
   }, []);
   return (
     <BrowserRouter>
-      <BackButtonHandler />
       <Routes>
         <Route path={routes.getMainPage()} element={<MainPage />} />
         <Route path={routes.getProfilePage()} element={<ProfilePage />} />
