@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './LoadingPage.scss';
+import css from './index.module.scss';
 import ProgressSlider from '../../components/Slider';
 
 const LoadingPage: React.FC = () => {
@@ -20,27 +20,27 @@ const LoadingPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="loadingPage">
-      <div className="loadingPage__content">
-        <div className="loadingPage__logo">
-          <div className="logoSpinner">⚡</div>
+    <div className={css.loadingPage}>
+      <div className={css.loadingPage__content}>
+        <div className={css.loadingPage__logo}>
+          <div className={css.logoSpinner}>⚡</div>
         </div>
         
-        <h1 className="loadingPage__title">
+        <h1 className={css.loadingPage__title}>
           Загружаем приложение
         </h1>
         
-        <p className="loadingPage__subtitle">
+        <p className={css.loadingPage__subtitle}>
           Пожалуйста, подождите...
         </p>
 
-        <div className="loadingPage__progress">
+        <div className={css.loadingPage__progress}>
           <ProgressSlider 
             progress={progress}
             height={6}
             color="#ff6b6b"
           />
-          <span className="loadingPage__percentage">
+          <span className={css.loadingPage__percentage}>
             {Math.round(progress)}%
           </span>
         </div>
