@@ -72,8 +72,9 @@
   color: #333;
 }
 
-.backButton {
-  display: block;
+.backButton,
+.writeButton {
+  flex: 1;
   padding: 12px;
   background-color: white;
   border-radius: 12px;
@@ -90,4 +91,9 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
+}
+
+.writeButton {
+  background-color: #0088cc;
+  color: white;
 }

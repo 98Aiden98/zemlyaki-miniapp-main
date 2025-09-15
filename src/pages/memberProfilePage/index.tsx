@@ -1,8 +1,9 @@
-import css from "./index.module.scss"; 
+import css from "./index.module.scss";
 import { GetUser, GetMemberById } from "../../lib/telegram";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import type { TelegramUser } from "../../types/telegram";
+import { openTelegramLink } from "@telegram-apps/sdk";
 
 const MemberProfilePage = () => {
   const navigate = useNavigate();
@@ -34,6 +35,12 @@ const MemberProfilePage = () => {
     };
     fetchMember();
   }, [userId]);
+
+  const handleWriteClick = () => {
+    if (userId && openTelegramLink.isAvailable()) {
+      openTelegramLink(`tg://user?id=${userId}`);
+    }
+  };
 
   return (
     <div className={css.profileContainer}>
@@ -76,12 +83,14 @@ const MemberProfilePage = () => {
             </div>
           </section>
         )}
-        <button
-          className={css.backButton}
-          onClick={() => navigate("/members")}
-        >
+        <button className={css.backButton} onClick={() => navigate("/members")}>
           Назад
         </button>
+        {!loading && !error && member && (
+          <button className={css.writeButton} onClick={handleWriteClick}>
+            Написать
+          </button>
+        )}
       </main>
     </div>
   );
