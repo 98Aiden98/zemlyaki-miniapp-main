@@ -7,6 +7,7 @@ export const initTelegram = () => {
 };
 
 export const getUser = () => {
+    console.log(webApp);
   if (webApp && webApp.initDataUnsafe && webApp.initDataUnsafe.user) {
     const { first_name, last_name, photo_url } = webApp.initDataUnsafe.user;
     return {
