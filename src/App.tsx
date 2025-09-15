@@ -1,5 +1,10 @@
 import "./App.css";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import {
+  HashRouter as Router,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import * as routes from "./lib/routes";
 import MainPage from "./pages/mainPage";
 import ProfilePage from "./pages/profilePage";
@@ -68,20 +73,17 @@ function App() {
     };
   }, []);
   return (
-    <BrowserRouter>
+    <Router>
       <BackButtonHandler />
       <Routes>
         <Route path={routes.getMainPage()} element={<MainPage />} />
         <Route path={routes.getProfilePage()} element={<ProfilePage />} />
         <Route path={routes.getChatsPage()} element={<ChatsPage />} />
         <Route path={routes.getMembersPage()} element={<MembersPage />} />
-        <Route
-          path="/member/:userId"
-          element={<MemberProfilePage />}
-        />
+        <Route path="/member/:userId" element={<MemberProfilePage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
