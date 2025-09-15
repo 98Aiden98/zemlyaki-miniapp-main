@@ -104,6 +104,7 @@ export const GetMembers = async (chatId: string): Promise<TelegramUser[]> => {
     if (!data.ok) {
       throw new Error(data.description || "Failed to fetch chat administrators");
     }
+    console.log(data);
 
     const members: TelegramUser[] = await Promise.all(
       data.result.map(async (member: TelegramUser) => {
