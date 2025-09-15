@@ -37,8 +37,8 @@ const MemberProfilePage = () => {
   }, [userId]);
 
   const handleWriteClick = () => {
-    if (userId && openTelegramLink.isAvailable() && member?.id) {
-      openTelegramLink(`tg://user?id=${member.id}`);
+    if (userId && openTelegramLink.isAvailable() && member?.username) {
+      openTelegramLink(`https://t.me/${member.username}`);
     }
   };
 
