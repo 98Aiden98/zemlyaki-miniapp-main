@@ -3,6 +3,7 @@ import { GetUser, GetMembers } from "../../lib/telegram";
 import { useNavigate } from "react-router-dom";
 import type { TelegramUser } from "../../types/telegram";
 import { useEffect, useState } from "react";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const MembersPage = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const MembersPage = () => {
       </header>
       <main className={css.members}>
         {loading ? (
-          <div className={css.loading}>Загрузка...</div>
+          <LoadingSpinner/>
         ) : error ? (
           <div className={css.error}>{error}</div>
         ) : members.length === 0 ? (
