@@ -40,8 +40,8 @@ const MemberProfilePage = () => {
   const handleWriteClick = () => {
     if (userId && openTelegramLink.isAvailable() && member?.username) {
       openTelegramLink(`https://t.me/${member.username}`);
-      window.Telegram?.WebApp.close();
     }
+    window.Telegram?.WebApp.close();
   };
 
   return (
