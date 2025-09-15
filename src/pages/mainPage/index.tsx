@@ -1,11 +1,11 @@
 import css from "./index.module.scss";
-import { initTelegram, getUser } from "../../lib/telegram";
+import { initTelegram, GetUser } from "../../lib/telegram";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const MainPage = () => {
   const navigate = useNavigate();
-  const user = getUser();
+  const user = GetUser();
 
   useEffect(() => {
     initTelegram();
@@ -22,7 +22,7 @@ const MainPage = () => {
     <div className={css.appContainer}>
       <header className={css.header}>
         <img
-          src={user.photo}
+          src={user.photo_url}
           alt="User Avatar"
           className={css.header__avatar}
         />

@@ -1,22 +1,30 @@
-const webApp = window.Telegram?.WebApp;
+import { init, useLaunchParams } from "@telegram-apps/sdk-react";
+import type { TelegramUser } from "../types/telegram";
+
 
 export const initTelegram = () => {
-  if (webApp) {
-    webApp.ready();
+  try {
+    init();
+  } catch {
+    console.warn("Can't initialize tma, skipping...");
   }
 };
 
-export const getUser = () => {
-    console.log(webApp);
-  if (webApp && webApp.initDataUnsafe && webApp.initDataUnsafe.user) {
-    const { first_name, last_name, photo_url } = webApp.initDataUnsafe.user;
+export const GetUser = (): TelegramUser => {
+    const launchParams = useLaunchParams();
+  if (launchParams && launchParams.tgWebAppData?.user) {
+    const { id, first_name, last_name, username, photo_url } = launchParams.tgWebAppData.user;
     return {
-      name: `${first_name || ''} ${last_name || ''}`.trim() || 'Guest',
-      photo: photo_url || 'https://via.placeholder.com/40',
+      id,
+      first_name,
+      last_name,
+      username,
+      photo_url: photo_url || "https://via.placeholder.com/40",
+      name: `${first_name || ""} ${last_name || ""}`.trim() || "Guest",
     };
   }
   return {
-    name: 'Guest',
-    photo: 'https://via.placeholder.com/40',
+    name: "Guest",
+    photo_url: "https://via.placeholder.com/40",
   };
 };
