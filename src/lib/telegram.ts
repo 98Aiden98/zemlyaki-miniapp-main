@@ -12,29 +12,50 @@ import {
 
 const BOT_TOKEN = import.meta.env.VITE_APP_TELEGRAM_BOT_TOKEN || "not_set";
 
+let isInitialized = false;
+
 export function init(): void {
-
-  initSDK()
-
-  if (!backButton.isSupported() || !miniApp.isSupported()) {
-    throw new Error('ERR_NOT_SUPPORTED')
+  if (isInitialized) {
+    console.warn("Telegram SDK already initialized");
+    return;
   }
 
-  backButton.mount()
-  miniApp.mount()
-  themeParams.mount()
-  initData.restore()
+  initSDK();
+
+  if (!backButton.isSupported() || !miniApp.isSupported()) {
+    throw new Error("ERR_NOT_SUPPORTED");
+  }
+
+  if (!backButton.isMounted()) {
+    backButton.mount();
+  }
+  if (!miniApp.isMounted()) {
+    miniApp.mount();
+  }
+  if (!themeParams.isMounted()) {
+    themeParams.mount();
+  }
+  initData.restore();
+
   void viewport
     .mount()
-    .catch(e => {
-      console.error('Something went wrong mounting the viewport', e)
+    .catch((e) => {
+      console.error("Something went wrong mounting the viewport:", e);
     })
     .then(() => {
-      viewport.bindCssVars()
-    })
+      if (viewport.isMounted()) {
+        viewport.bindCssVars();
+      }
+    });
 
-  miniApp.bindCssVars()
-  themeParams.bindCssVars()
+  if (miniApp.isMounted()) {
+    miniApp.bindCssVars();
+  }
+  if (themeParams.isMounted()) {
+    themeParams.bindCssVars();
+  }
+
+  isInitialized = true;
 }
 
 export const GetUser = (): TelegramUser => {
