@@ -60,14 +60,14 @@ export const GetUser = (): TelegramUser => {
       first_name,
       last_name,
       username,
-      photo_url: photo_url || "./empty-photo.webp",
+      photo_url: photo_url || "/empty-photo.webp",
       name: `${first_name || ""} ${last_name || ""}`.trim() || "Guest",
     };
   }
   return {
     id: 0,
     name: "Guest",
-    photo_url: "./empty-photo.webp",
+    photo_url: "/empty-photo.webp",
   };
 };
 
@@ -85,7 +85,7 @@ async function getUserPhotoUrl(userId: string): Promise<string> {
     const data = await response.json();
     console.log("getUserPhotoUrl", data);
     if (!data.ok || !data.result.photos || data.result.photos.length === 0) {
-      return "./empty-photo.webp";
+      return "/empty-photo.webp";
     }
     const photo = data.result.photos[0][0];
     const fileResponse = await fetch(
@@ -98,7 +98,7 @@ async function getUserPhotoUrl(userId: string): Promise<string> {
     return `https://api.telegram.org/file/bot${BOT_TOKEN}/${fileData.result.file_path}`;
   } catch (error) {
     console.error(`Error fetching photo for user ${userId}:`, error);
-    return "./empty-photo.webp";
+    return "/empty-photo.webp";
   }
 }
 
