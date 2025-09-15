@@ -1,4 +1,4 @@
-import css from "./members.module.scss";
+import css from "./index.module.scss";
 import { GetUser, GetMembers } from "../../lib/telegram";
 import { useNavigate } from "react-router-dom";
 import type { TelegramUser } from "../../types/telegram";
