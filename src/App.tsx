@@ -9,6 +9,7 @@ import MemberProfilePage from "./pages/memberProfilePage";
 import { useEffect, useRef } from "react";
 import { init } from "./lib/telegram";
 import { backButton } from "@telegram-apps/sdk-react";
+import NotFoundPage from "./pages/NotFoundPage";
 
 const BackButtonHandler = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const BackButtonHandler = () => {
       isBackButtonMounted.current = true;
 
       backButton.onClick(() => {
-        navigate(-1); // Navigate back in history
+        navigate(-1);
       });
 
       const handleRouteChange = () => {
@@ -78,6 +79,7 @@ function App() {
           path="/member/:userId"
           element={<MemberProfilePage />}
         />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );
