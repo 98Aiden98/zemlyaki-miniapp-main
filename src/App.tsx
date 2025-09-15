@@ -71,7 +71,7 @@ function App() {
         <Route path={routes.getChatsPage()} element={<ChatsPage />} />
         <Route path={routes.getMembersPage()} element={<MembersPage />} />
         <Route
-          path={routes.getMemberProfilePage(routes.editMemberRouteParams)}
+          path="/member/:userId"
           element={<MemberProfilePage />}
         />
       </Routes>

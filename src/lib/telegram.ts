@@ -48,13 +48,6 @@ export function init(): void {
       }
     });
 
-  if (miniApp.isMounted()) {
-    miniApp.bindCssVars();
-  }
-  if (themeParams.isMounted()) {
-    themeParams.bindCssVars();
-  }
-
   isInitialized = true;
 }
 
