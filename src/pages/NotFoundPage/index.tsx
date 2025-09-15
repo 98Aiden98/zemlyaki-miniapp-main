@@ -1,4 +1,4 @@
- import css from "./NotFoundPage.module.scss";
+ import css from "./index.module.scss";
 import { useNavigate } from "react-router-dom";
 
 const NotFoundPage = () => {
