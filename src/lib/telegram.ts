@@ -83,6 +83,7 @@ async function getUserPhotoUrl(userId: string): Promise<string> {
       }
     );
     const data = await response.json();
+    console.log("getUserPhotoUrl", data);
     if (!data.ok || !data.result.photos || data.result.photos.length === 0) {
       return "https://via.placeholder.com/40";
     }
