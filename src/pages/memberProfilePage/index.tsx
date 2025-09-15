@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import type { TelegramUser } from "../../types/telegram";
 import { openTelegramLink } from "@telegram-apps/sdk";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const MemberProfilePage = () => {
   const navigate = useNavigate();
