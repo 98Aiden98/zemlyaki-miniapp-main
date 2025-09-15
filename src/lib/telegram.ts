@@ -3,7 +3,6 @@ import type { TelegramUser } from "../types/telegram";
 import {
   backButton,
   viewport,
-  themeParams,
   miniApp,
   initData,
   init as initSDK,
@@ -28,12 +27,6 @@ export function init(): void {
 
   if (!backButton.isMounted()) {
     backButton.mount();
-  }
-  if (!miniApp.isMounted()) {
-    miniApp.mount();
-  }
-  if (!themeParams.isMounted()) {
-    themeParams.mount();
   }
   initData.restore();
 
