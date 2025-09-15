@@ -1,7 +1,7 @@
 import css from "./index.module.scss";
 import { GetUser } from "../../lib/telegram";
 import { useNavigate } from "react-router-dom";
-import { getProfilePage } from "../../lib/routes";
+import { getChatsPage, getMembersPage, getProfilePage } from "../../lib/routes";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -9,9 +9,9 @@ const MainPage = () => {
 
   const menuItems = [
     { id: 1, title: "Профиль", icon: "👤", path: getProfilePage() },
-    { id: 2, title: "Участники", icon: "👥", path: "/members" },
+    { id: 2, title: "Участники", icon: "👥", path: getMembersPage() },
     { id: 3, title: "Мероприятия", icon: "📅", path: "/events" },
-    { id: 4, title: "Чаты", icon: "💬", path: "/chats" },
+    { id: 4, title: "Чаты", icon: "💬", path: getChatsPage() },
   ];
 
   return (
