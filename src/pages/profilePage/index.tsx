@@ -18,7 +18,7 @@ const ProfilePage = () => {
       </header>
       <main className={css.profileContent}>
         <section className={css.profileInfo}>
-          <h2 className={css.profileInfo__title}>Информация о профиле</h2>
+          <h2 className={css.profileInfo__title}>Информация</h2>
           <div className={css.profileInfo__item}>
             <span className={css.profileInfo__label}>Имя:</span>
             <span className={css.profileInfo__value}>{user.name}</span>
