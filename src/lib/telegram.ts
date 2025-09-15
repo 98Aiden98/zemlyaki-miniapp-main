@@ -7,6 +7,7 @@ import {
   init as initSDK,
   useLaunchParams,
   swipeBehavior,
+  settingsButton,
 } from "@telegram-apps/sdk-react";
 
 const BOT_TOKEN = import.meta.env.VITE_APP_TELEGRAM_BOT_TOKEN || "not_set";
@@ -45,6 +46,11 @@ export function init(): void {
     swipeBehavior.mount();
     swipeBehavior.enableVertical();
   }
+
+  if (settingsButton.mount.isAvailable()) {
+  settingsButton.mount();
+  settingsButton.hide();
+}
 
   isInitialized = true;
 }
