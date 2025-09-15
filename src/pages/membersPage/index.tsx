@@ -16,7 +16,7 @@ const MembersPage = () => {
       try {
         setLoading(true);
         setError(null);
-        const chatId = "4863017528";
+        const chatId = "-1004863017528";
         const fetchedMembers = await GetMembers(chatId);
         setMembers(fetchedMembers);
       } catch (err) {
