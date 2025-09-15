@@ -1,4 +1,4 @@
-import css from "./ProfilePage.module.scss";
+import css from "./index.module.scss";
 import { GetUser } from "../../lib/telegram";
 import { useNavigate } from "react-router-dom";
 
