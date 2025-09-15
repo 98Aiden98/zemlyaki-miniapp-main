@@ -1,4 +1,3 @@
-
 import type { TelegramUser } from "../types/telegram";
 import {
   backButton,
@@ -6,8 +5,9 @@ import {
   miniApp,
   initData,
   init as initSDK,
-  useLaunchParams
-} from '@telegram-apps/sdk-react'
+  useLaunchParams,
+  swipeBehavior,
+} from "@telegram-apps/sdk-react";
 
 const BOT_TOKEN = import.meta.env.VITE_APP_TELEGRAM_BOT_TOKEN || "not_set";
 
@@ -41,13 +41,19 @@ export function init(): void {
       }
     });
 
+  if (swipeBehavior.mount.isAvailable()) {
+    swipeBehavior.mount();
+    swipeBehavior.enableVertical();
+  }
+
   isInitialized = true;
 }
 
 export const GetUser = (): TelegramUser => {
-    const launchParams = useLaunchParams();
+  const launchParams = useLaunchParams();
   if (launchParams && launchParams.tgWebAppData?.user) {
-    const { id, first_name, last_name, username, photo_url } = launchParams.tgWebAppData.user;
+    const { id, first_name, last_name, username, photo_url } =
+      launchParams.tgWebAppData.user;
     return {
       id,
       first_name,
@@ -95,7 +101,6 @@ async function getUserPhotoUrl(userId: string): Promise<string> {
   }
 }
 
-
 export const GetMembers = async (chatId: string): Promise<TelegramUser[]> => {
   try {
     const response = await fetch(
@@ -110,16 +115,20 @@ export const GetMembers = async (chatId: string): Promise<TelegramUser[]> => {
 
     const data = await response.json();
     if (!data.ok) {
-      throw new Error(data.description || "Failed to fetch chat administrators");
+      throw new Error(
+        data.description || "Failed to fetch chat administrators"
+      );
     }
     console.log(data);
 
     const members: TelegramUser[] = await Promise.all(
-      data.result.map(async (member: {user: TelegramUser}) => {
+      data.result.map(async (member: { user: TelegramUser }) => {
         const photo_url = await getUserPhotoUrl(member.user.id.toString());
         return {
           id: member.user.id.toString(),
-          name: `${member.user.first_name} ${member.user.last_name || ""}`.trim(),
+          name: `${member.user.first_name} ${
+            member.user.last_name || ""
+          }`.trim(),
           first_name: member.user.first_name,
           last_name: member.user.last_name || "",
           username: member.user.username || "",
@@ -135,7 +144,10 @@ export const GetMembers = async (chatId: string): Promise<TelegramUser[]> => {
   }
 };
 
-export const GetMemberById = async (id: string, chatId: string = "mock_chat_id"): Promise<TelegramUser | null> => {
+export const GetMemberById = async (
+  id: string,
+  chatId: string = "mock_chat_id"
+): Promise<TelegramUser | null> => {
   try {
     const response = await fetch(
       `https://api.telegram.org/bot${BOT_TOKEN}/getChatMember?chat_id=${chatId}&user_id=${id}`,
