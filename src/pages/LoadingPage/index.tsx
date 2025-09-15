@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import ProgressSlider from './ProgressSlider';
 import './LoadingPage.scss';
+import ProgressSlider from '../../components/Slider';
 
 const LoadingPage: React.FC = () => {
   const [progress, setProgress] = useState(0);
