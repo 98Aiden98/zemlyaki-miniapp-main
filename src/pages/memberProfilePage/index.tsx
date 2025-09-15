@@ -54,7 +54,7 @@ const MemberProfilePage = () => {
       </header>
       <main className={css.profileContent}>
         {loading ? (
-          <div className={css.loading}>Загрузка...</div>
+          <LoadingSpinner/>
         ) : error ? (
           <div className={css.error}>{error}</div>
         ) : !member ? (

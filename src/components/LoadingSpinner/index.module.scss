@@ -1,6 +1,12 @@
-.loadingSpinner {
+.loadingSpinnerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  .loadingSpinner {
   display: inline-block;
-  border-width: 3px;
+  border-width: 5px;
   border-style: solid;
   border-radius: 50%;
   animation: spinner-rotate 1s linear infinite;
@@ -13,4 +19,5 @@
       transform: rotate(360deg);
     }
   }
+}
 }
