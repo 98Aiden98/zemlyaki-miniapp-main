@@ -10,6 +10,8 @@ import {
   useLaunchParams
 } from '@telegram-apps/sdk-react'
 
+const BOT_TOKEN = import.meta.env.VITE_APP_TELEGRAM_BOT_TOKEN || "not_set";
+
 export function init(): void {
 
   initSDK()
@@ -55,7 +57,36 @@ export const GetUser = (): TelegramUser => {
   };
 };
 
-const BOT_TOKEN = import.meta.env.VITE_APP_TELEGRAM_BOT_TOKEN || "not_set";
+async function getUserPhotoUrl(userId: string): Promise<string> {
+  try {
+    const response = await fetch(
+      `https://api.telegram.org/bot${BOT_TOKEN}/getUserProfilePhotos?user_id=${userId}&limit=1`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    if (!data.ok || !data.result.photos || data.result.photos.length === 0) {
+      return "https://via.placeholder.com/40";
+    }
+    const photo = data.result.photos[0][0];
+    const fileResponse = await fetch(
+      `https://api.telegram.org/bot${BOT_TOKEN}/getFile?file_id=${photo.file_id}`
+    );
+    const fileData = await fileResponse.json();
+    if (!fileData.ok) {
+      throw new Error(fileData.description || "Failed to fetch file path");
+    }
+    return `https://api.telegram.org/file/bot${BOT_TOKEN}/${fileData.result.file_path}`;
+  } catch (error) {
+    console.error(`Error fetching photo for user ${userId}:`, error);
+    return "https://via.placeholder.com/40";
+  }
+}
+
 
 export const GetMembers = async (chatId: string): Promise<TelegramUser[]> => {
   try {
@@ -74,11 +105,19 @@ export const GetMembers = async (chatId: string): Promise<TelegramUser[]> => {
       throw new Error(data.description || "Failed to fetch chat administrators");
     }
 
-    const members: TelegramUser[] = data.result.map((member: TelegramUser) => ({
-      id: member.id ? member.id.toString() : "",
-      name: `${member.first_name} ${member.last_name || ""}`.trim(),
-      photo_url: member.photo_url || "https://via.placeholder.com/40",
-    }));
+    const members: TelegramUser[] = await Promise.all(
+      data.result.map(async (member: TelegramUser) => {
+        const photo_url = await getUserPhotoUrl(member.id.toString());
+        return {
+          id: member.id.toString(),
+          name: `${member.first_name} ${member.last_name || ""}`.trim(),
+          first_name: member.first_name,
+          last_name: member.last_name || "",
+          username: member.username || "",
+          photo_url,
+        };
+      })
+    );
 
     return members;
   } catch (error) {
@@ -87,7 +126,33 @@ export const GetMembers = async (chatId: string): Promise<TelegramUser[]> => {
   }
 };
 
-export const GetMemberById = async (id: number): Promise<TelegramUser | null> => {
-  const members = await GetMembers("mock_chat_id");
-  return members.find((member) => member.id === id) || null;
+export const GetMemberById = async (id: string, chatId: string = "mock_chat_id"): Promise<TelegramUser | null> => {
+  try {
+    const response = await fetch(
+      `https://api.telegram.org/bot${BOT_TOKEN}/getChatMember?chat_id=${chatId}&user_id=${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    const data = await response.json();
+    if (!data.ok) {
+      throw new Error(data.description || "Failed to fetch member");
+    }
+    const member = data.result;
+    const photo_url = await getUserPhotoUrl(id);
+    return {
+      id: member.user.id.toString(),
+      name: `${member.user.first_name} ${member.user.last_name || ""}`.trim(),
+      first_name: member.user.first_name,
+      last_name: member.user.last_name || "",
+      username: member.user.username || "",
+      photo_url,
+    };
+  } catch (error) {
+    console.error(`Error fetching member ${id}:`, error);
+    return null;
+  }
 };
