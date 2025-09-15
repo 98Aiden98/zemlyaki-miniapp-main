@@ -107,14 +107,14 @@ export const GetMembers = async (chatId: string): Promise<TelegramUser[]> => {
     console.log(data);
 
     const members: TelegramUser[] = await Promise.all(
-      data.result.map(async (member: TelegramUser) => {
-        const photo_url = await getUserPhotoUrl(member.id.toString());
+      data.result.map(async (member: {user: TelegramUser}) => {
+        const photo_url = await getUserPhotoUrl(member.user.id.toString());
         return {
-          id: member.id.toString(),
-          name: `${member.first_name} ${member.last_name || ""}`.trim(),
-          first_name: member.first_name,
-          last_name: member.last_name || "",
-          username: member.username || "",
+          id: member.user.id.toString(),
+          name: `${member.user.first_name} ${member.user.last_name || ""}`.trim(),
+          first_name: member.user.first_name,
+          last_name: member.user.last_name || "",
+          username: member.user.username || "",
           photo_url,
         };
       })
