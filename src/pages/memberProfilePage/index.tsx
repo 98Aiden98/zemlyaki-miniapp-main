@@ -6,7 +6,7 @@ import type { TelegramUser } from "../../types/telegram";
 
 const MemberProfilePage = () => {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
+  const { userId } = useParams<{ userId: string }>();
   const user = GetUser();
   const [member, setMember] = useState<TelegramUser | null>(null);
   const [loading, setLoading] = useState(true);
@@ -14,7 +14,7 @@ const MemberProfilePage = () => {
 
   useEffect(() => {
     const fetchMember = async () => {
-      if (!id) {
+      if (!userId) {
         setError("ID участника не указан");
         setLoading(false);
         return;
@@ -23,7 +23,7 @@ const MemberProfilePage = () => {
       try {
         setLoading(true);
         const chatId = "-4863017528";
-        const fetchedMember = await GetMemberById(id, chatId);
+        const fetchedMember = await GetMemberById(userId, chatId);
         setMember(fetchedMember);
       } catch (err) {
         console.error("Failed to fetch member:", err);
@@ -33,7 +33,7 @@ const MemberProfilePage = () => {
       }
     };
     fetchMember();
-  }, [id]);
+  }, [userId]);
 
   return (
     <div className={css.profileContainer}>
